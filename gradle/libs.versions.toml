@@ -6,7 +6,7 @@ kotlin = "2.2.20"
 agp = "8.9.2"
 kotlinx-coroutines = "1.10.2"
 compose-plugin = "1.9.0"
-platformtoolsCore = "0.6.2"
+platformtoolsCore = "0.7.1"
 runtime = "1.9.0"
 vanniktech = "0.33.0"
 
