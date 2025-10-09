@@ -1,7 +1,7 @@
 [versions]
 
 kermit = "2.0.8"
-jna = "5.18.0"
+jna = "5.18.1"
 kotlin = "2.2.20"
 agp = "8.9.2"
 kotlinx-coroutines = "1.10.2"
