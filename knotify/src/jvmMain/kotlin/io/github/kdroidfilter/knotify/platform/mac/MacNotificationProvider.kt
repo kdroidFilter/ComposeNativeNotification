@@ -4,8 +4,6 @@ import com.sun.jna.Pointer
 import io.github.kdroidfilter.knotify.builder.NotificationBuilder
 import io.github.kdroidfilter.knotify.builder.NotificationProvider
 import io.github.kdroidfilter.knotify.model.DismissalReason
-import io.github.kdroidfilter.knotify.utils.RuntimeMode
-import io.github.kdroidfilter.knotify.utils.detectRuntimeMode
 import io.github.kdroidfilter.knotify.utils.extractToTempIfDifferent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,13 +28,6 @@ internal class MacNotificationProvider() : NotificationProvider {
         coroutineScope = CoroutineScope(Dispatchers.IO).also { scope ->
             scope.launch {
                 try {
-                    // Check if we're in development mode
-                    if (detectRuntimeMode() == RuntimeMode.DEV) {
-                        logger.w { "Notifications are only available in distributable mode due to Apple's restrictions. Current mode: DEV" }
-                        builder.onFailed?.invoke()
-                        return@launch
-                    }
-
                     val appIconPath = builder.smallIconPath ?: NotificationInitializer.appConfiguration.smallIcon
                     logger.d { "Sending notification with title: ${builder.title}" }
 
@@ -176,12 +167,6 @@ internal class MacNotificationProvider() : NotificationProvider {
 
     override fun hideNotification(builder: NotificationBuilder) {
         try {
-            // Check if we're in development mode
-            if (detectRuntimeMode() == RuntimeMode.DEV) {
-                logger.w { "Notifications are only available in distributable mode due to Apple's restrictions. Current mode: DEV" }
-                return
-            }
-
             val notification = activeNotifications[builder.id]
             if (notification != null) {
                 try {
